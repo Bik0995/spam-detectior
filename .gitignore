@@ -1,0 +1,18 @@
+# Fichiers compilés Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Fichiers de données générés
+*.pkl
+
+# Rapports générés (pour ne pas encombrer le dépôt)
+graphics/*.png
+graphics/*.pdf
+output/*.csv
+output/*.txt
+graphics/*.gif
+
+# Fichiers système
+.DS_Store
+Thumbs.db
