@@ -25,7 +25,6 @@ def get_data():
 
 
 def report1_high_spam_list(output_dir: str, threshold: int):
-    """Report 1: messages with spam_score above threshold."""
     df = get_data()
     high = df[df['spam_score'] > threshold][['message_id', 'text', 'spam_score']]
     path = os.path.join(output_dir, "report1_high_spam.csv")
@@ -33,7 +32,6 @@ def report1_high_spam_list(output_dir: str, threshold: int):
 
 
 def report2_statistics(output_dir: str):
-    """Report 2: statistical description."""
     df = get_data()
     qual_cols = ['sender_type', 'country', 'trusted', 'has_link', 'has_phone',
                  'has_exclamation', 'all_caps']
@@ -47,14 +45,12 @@ def report2_statistics(output_dir: str):
 
 
 def report3_pivot_links(output_dir: str):
-    """Report 3: pivot table has_link vs category."""
     df = get_data()
     crosstab = pd.crosstab(df['has_link'], df['category'], margins=True)
     crosstab.to_csv(os.path.join(output_dir, "report3_pivot.csv"))
 
 
 def report4_bar_chart(graphics_dir: str):
-    """Report 4: clustered bar chart – spam count by sender type."""
     df = get_data()
     spam_df = df[df['category'] == 'спам']
     counts = spam_df.groupby('sender_type').size()
@@ -71,7 +67,6 @@ def report4_bar_chart(graphics_dir: str):
 
 
 def report5_histogram(graphics_dir: str):
-    """Report 5: histogram of message length for spam and ham."""
     df = get_data()
     spam_lengths = df[df['category'] == 'спам']['length']
     ham_lengths = df[df['category'] == 'не спам']['length']
@@ -88,7 +83,6 @@ def report5_histogram(graphics_dir: str):
 
 
 def report6_boxplot(graphics_dir: str):
-    """Report 6: box plot of keyword count by category."""
     df = get_data()
     data = [df[df['category'] == 'спам']['keyword_count'],
             df[df['category'] == 'не спам']['keyword_count']]
@@ -102,7 +96,6 @@ def report6_boxplot(graphics_dir: str):
 
 
 def report7_scatter(graphics_dir: str):
-    """Report 7: scatter plot length vs keyword count."""
     df = get_data()
     spam = df[df['category'] == 'спам']
     ham = df[df['category'] == 'не спам']
@@ -119,10 +112,8 @@ def report7_scatter(graphics_dir: str):
 
 
 def generate_all_reports():
-    """Generate all seven reports."""
     config = load_config()
     threshold = config.getint('Classifier', 'threshold')
-    # Use absolute paths based on the project root
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     out_dir = os.path.join(base_dir, config.get('Paths', 'output_dir', fallback='output'))
     graph_dir = os.path.join(base_dir, config.get('Paths', 'graphics_dir', fallback='graphics'))
